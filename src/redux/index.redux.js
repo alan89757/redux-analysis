@@ -19,3 +19,12 @@ export function tempCHANGE(data) {
         data
     }
 }
+
+export function tempCHANGEAsync(data) {
+    // 相当于在发请求。
+    return callback => {
+        setTimeout(() => {
+            callback(tempCHANGE(data));
+        }, 2000)
+    }
+}

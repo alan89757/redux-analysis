@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { tempCHANGE } from "../redux/index.redux";
+import { tempCHANGE, tempCHANGEAsync } from "../redux/index.redux";
 import { connect } from 'react-redux';
 
 const scaleNames = {
@@ -13,9 +13,11 @@ class TemperatureInput extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(e) {
-    console.log("handleChange___", this.props)
     const celsius = this.props.scale === 'f' ? tryConvert(e.target.value, toCelsius) : e.target.value;
-    this.props.tempCHANGE({scale: this.props.scale, celsius: celsius});
+    this.props.scale === 'f'?
+        this.props.tempCHANGE({scale: this.props.scale, celsius: celsius}) :
+        this.props.tempCHANGEAsync({scale: this.props.scale, celsius: celsius});
+    // this.props.tempCHANGE({scale: this.props.scale, celsius: celsius});
   }
 
   render() {
@@ -64,7 +66,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const actionCreater = { tempCHANGE };
+const actionCreater = { tempCHANGE, tempCHANGEAsync };
 
 TemperatureInput = connect(mapStateToProps, actionCreater)(TemperatureInput);
 
