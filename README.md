@@ -1,2 +1,2 @@
-#redux
-手动实现redux
+## redux
+redux的使用与源码分析
