@@ -1,1 +1,2 @@
-# 手动实现redux
+#redux
+手动实现redux
