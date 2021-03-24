@@ -1,21 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware, compose } from 'redux';
-import {tempChange} from "./redux/index.redux";
-import thunk from 'redux-thunk';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore, applyMiddleware } from "./myredux/index";
+import { SystemLogOne, SystemLogTwo, SystemLogThree, SystemLogFour } from "./middleware/log";
+// import { Provider  } from "react-redux";
+import { Provider } from "./react-redux/index";
 
-import { Provider } from 'react-redux';
+// import thunk from "redux-thunk";
+import { tempChange } from "./redux/index";  // reducer
+import App from "./app";
 
-import './index.css';
-import registerServiceWorker from './registerServiceWorker';
-import Calculator from './eventBoiling/calculator'
-
-const store = createStore(tempChange, compose(applyMiddleware(thunk)));
+// 中间件从右到左执行
+const store = createStore(tempChange, applyMiddleware(SystemLogOne, SystemLogTwo, SystemLogThree, SystemLogFour));
 
 ReactDOM.render(
-  (<Provider store={store}>
-      <Calculator />
-  </Provider>)
-  ,
-  document.getElementById('root'));
-registerServiceWorker();
+  <Provider store={store}>
+    <App />
+  </Provider>, document.getElementById("app"));

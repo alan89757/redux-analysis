@@ -1,25 +1,33 @@
+/**
+ * Created by Derry on 2018/3/28.
+ */
+
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
+import { tempChangeAction } from "../redux/index";
 
+// const isboil = "not";
 class BoilingVerdict extends React.Component {
-  constructor(props){
-    super(props);
-  }
-  render() {
-    return <p>The water { this.props.isboil } boil.</p>;
-  }
+    render() {
+        return <p>The water { this.props.isboil } boil.</p>;
+    }
 }
 
-const mapStateToProps = (state) => {
-  let boilObj = {isboil : 'not'}
-  state.celsius >= 100 ? boilObj = {
-      isboil : 'would'
-  } : boilObj = {
-      isboil : 'not'
-  };
-  return boilObj
+function toCelsius(fahrenheit) {
+    return (fahrenheit - 32) * 5 / 9;
 }
 
-BoilingVerdict = connect(mapStateToProps)(BoilingVerdict);
+const mapStateToProps = (state, ownProps)=> {
+    if(state.celsius >=100) {
+        return {isboil: "would"}
+    } else {
+        return {isboil: "not"}
+    }
+    
+}
 
-export default BoilingVerdict
+const actionCreater = { tempChangeAction };
+
+BoilingVerdict = connect(mapStateToProps, actionCreater)(BoilingVerdict);
+
+export default BoilingVerdict;
